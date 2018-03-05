@@ -1,0 +1,65 @@
+﻿@model FingerprintsModel.FacilitesModel
+
+@{
+    ViewBag.Title = "AgencyFacilitiesManagerDashboard";
+    Layout = "~/Views/Shared/AgencyStaffLayout.cshtml";
+}
+
+
+@section Script{
+
+
+
+
+}
+
+@section MainContentHolder{
+
+    <div class="row">
+
+        @Html.Partial("~/Views/Partialviews/CenterClosureAlert.cshtml")
+
+
+        <div class="col-lg-12">
+            <h2 class="page-header">Center Overview <i style="font-size:18px;">(Work Orders)</i></h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-main">
+            <div class="table-responsive">
+                <table class="table table_size" id="gridViewAgency">
+                    <thead style="cursor: pointer;">
+                        <tr>
+                            <th>Center Name</th>
+                            <th>Opened</th>
+                            <th>Assigned</th>
+                            <th>Completed</th>
+                            <th>Temporarily Fixed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model.FacilitiesDashboardList.Count() > 0)
+                        {
+
+                            foreach (FingerprintsModel.FacilitiesManagerDashboard dashboard in Model.FacilitiesDashboardList)
+                            {
+                                <tr>
+                                    <td accesskey="@dashboard.Enc_CenterId"><a style="text-decoration: underline;" href="#">@dashboard.CenterName</a></td>
+                                    <td style="text-align:right;"><a style="text-align:right; text-decoration: underline; cursor:pointer" onclick="LoadPendingDisable(this,false);" typeofdatacount="Indicated" mode="Pending">@dashboard.OpenedWorkOrders</a></td>
+                                    <td style="text-align:right;"><a style="text-align:right; text-decoration: underline; cursor:pointer" onclick="LoadPendingDisable(this,false);" typeofdatacount="Pending" mode="QualifyReleased">@dashboard.AssignedWorkOrders</a></td>
+                                    <td style="text-align:right;"><a style="text-align:right; text-decoration: underline; cursor:pointer" onclick="LoadPendingDisable(this,false);" typeofdatacount="Qualified" mode="Released">@dashboard.CompletedWorkOrders</a></td>
+                                    <td style="text-align:right;"><a style="text-align:right; text-decoration: underline; cursor:pointer" onclick="LoadPendingDisable(this,false);" typeofdatacount="Released" mode="All">@dashboard.TemporarilyFixedWorkOrders</a></td>
+                                </tr>
+                            }
+
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+}

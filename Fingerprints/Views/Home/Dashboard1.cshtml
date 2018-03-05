@@ -1,0 +1,879 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/AgencyStaffLayout.cshtml";
+}
+
+
+
+@model FingerprintsModel.ExecutiveDashBoard
+@{
+    @section Title{
+        Dashboard
+    }
+    ViewBag.Title = "Center Manager";
+    Layout = "~/Views/Shared/AgencyStaffLayout.cshtml";
+}
+
+@section Script{
+    @*
+        <script type="text/javascript">
+                        function Loadcenterscreening(Object) {
+                            centerid = 0;
+                            centername = null;
+                            centerid = $(Object).attr("accesskey");
+                            centername = $(Object).text();
+                            $('#Divclientscreening > tbody > tr').remove();
+                            $('#Divclientscreening').hide();
+                            $('.headerclient').hide();
+                            $.ajax({
+                                url: HostedDir + "/Teacher/Loadallcenterscreeningexe",
+                                type: "POST",
+                                data: {
+                                    Centerid: $(Object).attr("accesskey")
+                                },
+                                dataType: "json",
+                                secureuri: false,
+                                async: false,
+                                success: function (data) {
+
+                                    $('#CenterName1').text($(Object).attr("centername"));
+                                    BindClientscreeningscenter(data);
+
+                                }
+                               , error: function (Data) {
+                                   customAlert("Session Ended Log Onto The System Again."); setTimeout(function () { window.location.href = HostedDir + '/login/Loginagency'; }, 2000);
+                               }
+                            });
+                        }
+                        function BindClientscreeningscenter(data) {
+                            if (data != null && data.length > 0) {
+                                $('#div2').hide();
+                                var total = 0;
+                                $('#DivcenterscreeningList > tbody > tr').remove();
+                                var tr = "";
+                                for (var i = 0; i < data.length; i++) {
+                                    tr += "<tr>";
+                                    if (data[i].Missingcount != 0)
+                                        tr += '<td><input accesskey="' + data[i].Screeningid + '" class="minimal" type="checkbox"   style="width:auto;" value="true"></td>';
+                                    else
+                                        tr += '<td><input disabled="disabled" accesskey="' + data[i].Screeningid + '" class="minimal" type="checkbox"   style="width:auto;" value="true"></td>';
+
+                                    tr += "<td>" + ((typeof (data[i].Screeningname) != 'undefined') && (data[i].Screeningname != null) ? data[i].Screeningname : '') + "</td>";
+                                    if (data[i].Missingcount == 0)
+                                        tr += "<td>" + ((typeof (data[i].Missingcount) != 'undefined') && (data[i].Missingcount != null) ? data[i].Missingcount : '') + " </span></td>";
+                                    else
+                                        tr += "<td><a onclick=getclient(this); centerid='" + centerid + "' style='cursor: pointer;text-decoration: underline;' accesskey='" + data[i].Screeningid + "'>" + data[i].Missingcount + "</a> </td>";
+
+
+                                    tr += "</tr>";
+                                    $('#DivcenterscreeningList > tbody').append(tr);
+                                    tr = "";
+                                    total = total + parseInt(data[i].Missingcount);
+                                }
+                                tr += '<tr><td></td><td></td><td>' + total + '</td></tr>';
+                                $('#DivcenterscreeningList > tbody').append(tr);
+                                $('#Modalcenterscreening').modal('toggle');
+                            }
+                            else {
+                                $('#DivcenterscreeningList > tbody > tr').remove();
+                                $('#div2').show();
+                            }
+                        }
+        </script>*@
+}
+
+@section maincontentholder
+        {
+    <style type="text/css">
+        #thermometer {
+            position: absolute;
+            /*top: 520px;
+            left: 50px;*/
+            border: solid 0px black !important;
+        }
+
+        #thermometer-hours {
+            position: absolute;
+            top: 520px;
+            left: 50px;
+            border: solid 0px black !important;
+        }
+
+        .Hours {
+            background: #184d7d;
+        }
+
+        #thermometer .barDollarThermo, #thermometer-hours .barDollarThermo {
+            bottom: 221px !important;
+            width: 30px !important;
+        }
+
+        #thermometer .barHoursThermo, #thermometer-hours .barHoursThermo {
+            /*left: 91px!important;*/
+            /*top: auto !important;
+            width: 30px !important;*/
+        }
+
+        /*#thermometer #bar,#thermometer-hours #bar {
+            background-color: #ee1f9a !important;
+            bottom: 260px !important;
+            width: 64px !important;
+            left: 0 !important;
+            right: 0 !important;
+            margin: auto;
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+            top: auto !important;
+        }*/
+
+        #thermometer #background, #thermometer-hours #background {
+            margin: 0;
+        }
+
+        #thermometer #label {
+            top: 16px !important;
+        }
+        /*#thermometer-hours #label {
+            top:16px !important;
+        }
+        #thermometer-hours #label {
+            top: 16px !important;
+        }*/
+
+        #thermometer-hours #label {
+            top: 16px !important;
+        }
+
+            #thermometer #label div, #thermometer-hours #label div {
+                color: #fff;
+            }
+
+            #thermometer-hours #label div {
+                color: #fff;
+            }
+
+        #thermometer .Title, #thermometer-hours .Title {
+            margin-left: 0px;
+            color: #fff;
+            width: auto !important;
+        }
+
+        #thermometer-hours .Title {
+            margin-left: 0px;
+            color: #fff;
+            width: auto !important;
+        }
+
+        input:focus {
+            outline: 0 !important;
+        }
+
+        .btn-active-color {
+            background: #184d7d !important;
+            color: #fff !important;
+        }
+
+        #thermometer .CurrentValue, #thermometer-hours .CurrentValue {
+            left: 0px !important;
+            top: auto !important;
+            bottom: 178px !important;
+            right: 0;
+            height: auto !important;
+            color: #fff !important;
+            font-size: 25px !important;
+        }
+
+        #chartdiv {
+            width: 336px !important;
+            margin-left: 0 !important;
+            margin: auto !important;
+            position: relative;
+            left: 10px;
+            top: -30px;
+        }
+
+        #thermometer .MajorTick, #thermometer-hours .MajorTick {
+            border-top: 4px solid #808285 !important;
+        }
+    </style>
+    <script src="http://www.jlion.com/js/jquery-1.6.1.js"></script>
+
+    <script src="~/Content/Scripts/jliontherm.js"></script>
+    <script src="~/Content/Scripts/jliontherm-hours.js"></script>
+    <link href="~/Content/css/jliontherm.css" rel="stylesheet" />
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="page-header page-header-change">@ViewBag.RoleName Dashboard</h2>
+        </div>
+    </div>
+    @*<div class="row" id="ScreeningDiv">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    *@
+
+    <div class="edu-block-all" style="position:relative;">
+        <div class="row">
+            <div class="col-xs-12 no-padding">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="col-xs-12 tablist-hole">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs tab-lists tb-lt" role="tablist">
+                                <li role="presentation" class="active"><a href="#Agency" aria-controls="Agency" role="tab" data-toggle="tab">Center View</a></li>
+                                <li role="presentation" class=""><a href="#Pir" aria-controls="Pir" role="tab" data-toggle="tab" class="tab-pad">PIR</a></li>
+                                <li role="presentation" class=""><a href="#Demo" aria-controls="Demo" role="tab" data-toggle="tab" class="tab-pad">Demo</a></li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content tb-bd col-xs-12">
+                                <div role="tabpanel" class="tab-pane fade  ma-tab active in" id="Agency">
+                                    <div class="col-md-4 col-sm-6 col-xs-12 tab-img-al">
+                                        <div class="tab-img">
+                                            <img src="~/Images/tab-img.png">
+                                            <div class="tab-desc">
+                                                <h3>ADA</h3>
+                                                <p>@Model.ADA%</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-3 col-sm-6 col-xs-12 tab-img-al">
+                                        <div class="tab-img">
+                                            <img src="~/Images/tab-img.png">
+                                            <div class="tab-desc">
+                                                <h3>SLOTS</h3>
+                                                <p class="blue-colour">@Model.AvailablePercentage %</p>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                    <div class="col-md-4 col-sm-6 col-xs-12 tab-img-al">
+                                        <div class="tab-img">
+                                            <img src="~/Images/tab-img.png">
+                                            <div class="tab-desc">
+                                                <h3>SEATS</h3>
+                                                <p class="yellow-colour">@Model.AvailableSeat</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12 tab-img-al seats-board">
+                                        <div class="tab-img">
+                                            <img src="~/Images/tab-img.png">
+                                            <div class="tab-desc">
+                                                <h3>YESTERDAY</h3>
+                                                <p class="red-colour">@Model.YesterDayAttendance</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade  ma-tab" id="Pir">
+                                    <div class="col-md-4 col-sm-6 col-xs-12 tab-img-al">
+                                        <div class="tab-img">
+                                            <img src="~/Images/tab-img.png">
+                                            <div class="tab-desc">
+                                                <h3>ADA</h3>
+                                                <p>94.7%</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-3 col-sm-6 col-xs-12 tab-img-al">
+                                        <div class="tab-img">
+                                            <img src="~/Images/tab-img.png">
+                                            <div class="tab-desc">
+                                                <h3>SLOTS</h3>
+                                                <p class="blue-colour">96.1%</p>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                    <div class="col-md-4 col-sm-6 col-xs-12 tab-img-al">
+                                        <div class="tab-img">
+                                            <img src="~/Images/tab-img.png">
+                                            <div class="tab-desc">
+                                                <h3>SEATS</h3>
+                                                <p class="yellow-colour">1987</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12 tab-img-al">
+                                        <div class="tab-img">
+                                            <img src="~/Images/tab-img.png">
+                                            <div class="tab-desc">
+                                                <h3>YESTERDAY</h3>
+                                                <p class="red-colour">2113</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade  ma-tab" id="Demo">
+                                    <div class="col-md-4 col-sm-6 col-xs-12 tab-img-al">
+                                        <div class="tab-img">
+                                            <img src="~/Images/tab-img.png">
+                                            <div class="tab-desc">
+                                                <h3>ADA</h3>
+                                                <p>94.7%</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-3 col-sm-6 col-xs-12 tab-img-al">
+                                        <div class="tab-img">
+                                            <img src="~/Images/tab-img.png">
+                                            <div class="tab-desc">
+                                                <h3>SLOTS</h3>
+                                                <p class="blue-colour">96.1%</p>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                    <div class="col-md-4 col-sm-6 col-xs-12 tab-img-al">
+                                        <div class="tab-img">
+                                            <img src="~/Images/tab-img.png">
+                                            <div class="tab-desc">
+                                                <h3>SEATS</h3>
+                                                <p class="yellow-colour">1987</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12 tab-img-al">
+                                        <div class="tab-img">
+                                            <img src="~/Images/tab-img.png">
+                                            <div class="tab-desc">
+                                                <h3>YESTERDAY</h3>
+                                                <p class="red-colour">2113</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 table-block-res">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-xs-12 no-padding edu-tbl-all">
+                                    <div class="edu-tbl-title">
+                                        <h2>Enrolled By Program</h2>
+                                        <div class="pin"><img src="~/Images/pin.png"></div>
+                                    </div>
+                                    <div class="col-xs-12 no-padding" style="height:292px;overflow:auto;">
+                                        <table class="edu-table-block  edu-table-enroll col-xs-12 no-padding">
+
+                                            <tr>
+                                                <th>Program</th>
+                                                <th>Funded</th>
+                                                <th>Actual</th>
+                                            </tr>
+                                            @if (Model.EnrolledProgramList != null)
+                                            {
+                                                foreach (FingerprintsModel.ExecutiveDashBoard.EnrolledProgram enrollProgram in Model.EnrolledProgramList)
+                                                {
+                                                    <tr>
+                                                        <td>@enrollProgram.ProgramType</td>
+                                                        <td class="number-center">@enrollProgram.Total</td>
+                                                        <td class="number-center">@enrollProgram.Available</td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="3">No Result Found.</td></tr>
+                                            }
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-xs-12 no-padding edu-tbl-all edu-tbl-all-blue">
+                                    <div class="edu-tbl-title edu-title-blue">
+                                        <h2>Missing Screening</h2>
+                                        <div class="pin"><img src="~/Images/pin.png"></div>
+                                    </div>
+                                    <div class="col-xs-12 no-padding" style="height:292px;overflow:auto;">
+                                        <table class="edu-table-block edu-table-missing col-xs-12 no-padding">
+                                            <tr>
+                                                <th>Screen Name</th>
+                                                <th>Count</th>
+                                            </tr>
+                                            @if (Model.MissingScreenList != null)
+                                            {
+                                                foreach (FingerprintsModel.ExecutiveDashBoard.MissingScreen MissingScreen in Model.MissingScreenList)
+                                                {
+                                                    <tr>
+                                                        <td>@MissingScreen.Name</td>
+                                                        <td class="number-center">@MissingScreen.Screen</td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-xs-12 no-padding edu-tbl-all edu-tbl-all-red">
+                                    <div class="edu-tbl-title edu-title-red">
+                                        <h2>Classroom Type</h2>
+                                        <div class="pin"><img src="~/Images/pin.png"></div>
+                                    </div>
+                                    <div class="col-xs-12 no-padding" style="height:292px;overflow:auto;">
+                                        <table class="edu-table-block edu-table-class col-xs-12 no-padding">
+                                            <tr>
+                                                <th>Room Type</th>
+                                                <th>Total</th>
+                                                <th>Actual</th>
+                                            </tr>
+                                            @if (Model.ClassRoomTypeList != null)
+                                            {
+                                                foreach (FingerprintsModel.ExecutiveDashBoard.ClassRoomType classRoomType in Model.ClassRoomTypeList)
+                                                {
+                                                    <tr>
+                                                        <td>@classRoomType.ClassSession</td>
+                                                        <td class="number-center">@classRoomType.Total</td>
+                                                        <td class="number-center">@classRoomType.Available</td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-xs-12 no-padding edu-tbl-all edu-tbl-all-black">
+                                    <div class="edu-tbl-title edu-title-black">
+                                        <h2>Case Note Analysis</h2>
+                                    </div>
+                                    <div class="graph-img1">
+                                        <div id="chartdiv" style="width: 420px; height: 350px;margin-left: -26px;margin-top: -25px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-xs-12 no-padding edu-tbl-all edu-tbl-graph">
+                                    <div class="graph-img">
+                                        @*<img src="~/Images/graph1.png">*@
+                                        @*<div style="background-color: #fff;width: 152px;margin: auto;border-radius: 4px;padding:2px;">
+                                                <input type="button" id="btnHours" value="Hours" class="btn btn-primary btn-active-color" style="padding:3px 8px;margin-right:0;text-transform:uppercase;font-size:13px;background-color: #fff;border: 0px;color: #337ab7;" />
+                                                <input type="button" id="btnDollars" value="Dollars" class="btn btn-primary" style="padding:3px 8px;margin: 0px;margin-left:0;text-transform:uppercase;font-size:13px;background-color: #fff;border: 0px;color: #337ab7;" />
+                                            </div>*@
+                                        @*<div id="thermometer-hours" style="height:500px!important;"></div>*@
+
+                                        <div id="thermometer"></div>
+                                        <div id="thermometer-hours"></div>
+
+                                        <div id="value">
+                                            <input type="text" size="10" id="txtThermHours" value="@Model.ThermHours" style="display:none;" />
+                                            <input type="text" size="10" id="txtThermDollars" value="@Model.ThermDollars" style="display:none;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <div class="col-xs-12 no-padding edu-tbl-all edu-tbl-all-orange">
+                                    <div class="edu-tbl-title edu-title-orange">
+                                        <h2>Employee Birthday</h2>
+                                        <div class="pin"><img src="~/Images/pin.png"></div>
+                                    </div>
+                                    <div class="col-xs-12 no-padding" style="height:292px;overflow:auto;">
+
+                                        <table class="edu-table-block edu-table-birthday col-xs-12 no-padding">
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Date</th>
+                                            </tr>
+                                            @if (Model.EmployeeBirthdayList != null && Model.EmployeeBirthdayList.Count() > 0)
+                                            {
+                                                foreach (FingerprintsModel.ExecutiveDashBoard.EmployeeBirthday empBirthday in Model.EmployeeBirthdayList)
+                                                {
+                                                    <tr>
+                                                        <td>@empBirthday.Staff</td>
+                                                        <td>@empBirthday.DateOfBirth</td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr><td colspan="2">No Birthday Found.</td></tr>
+                                            }
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xs-12 content-block">
+
+                        <div class="col-lg-4 col-sm-6 col-xs-12 tab-img-al">
+                            <div class="tab-img">
+                                <img src="~/Images/tab-img.png">
+                                <div class="tab-desc">
+                                    <h3>Disabilities</h3>
+                                    <p>@Model.DisabilityPercentage %</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xs-12 tab-img-al">
+                            <div class="tab-img">
+                                <img src="~/Images/tab-img.png">
+                                <div class="tab-desc">
+                                    <h3>Over Income</h3>
+                                    <p class="blue-colour">@Model.FamilyOverIncome %</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xs-12 tab-img-al">
+                            <div class="tab-img">
+                                <img src="~/Images/tab-img.png">
+                                <div class="tab-desc">
+                                    <h3 style="padding-top:0;">Waiting List</h3>
+                                    <p class="orange-colour" style="font-size:30px;">@Model.WaitingList %</p>
+                                    <p class="orange-colour" style="font-size:24px;color: #2ecc71!important;"><span></span> @Model.WaitingListCount</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+
+            </div>
+
+        </div>
+        <div class="footer-bg-img-al">
+            <div class="footer-bg-img">
+                <img src="~/Images/footer-img1.png" class="footer-im1">
+                <img src="~/Images/footer-img2.png" class="footer-im2">
+            </div>
+        </div>
+    </div>
+<div class="modal fade" id="myModalSeats" role="dialog" style="display: none;">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" name="childid" id="childid" value="">
+                <input type="hidden" name="childname" id="childname" value="">
+                <label class="alert-dismissible" for="current_password">Attendance</label>
+            </div>
+            <div class="form-group-al">
+                <div class="form-group input-container">
+                    <label class="control-label" for="current_password" style="width:180px;">Date:</label>
+                    <input name="CNotes" style="width: 30%;display:inline-block" class="form-control txtseatdate txt-date txt-mandatory" id="CNotes" type="text" maxlength="50" placeholder="mm/dd/yyyy" value="">
+                    <button class="btn-seat-submit address-btn btn btn-primary" style="width:auto;display:inline-block;">Submit</button>
+                    <div class="err-container" style="height:15px;">
+                        <label class="control-label" for="current_password" style="width:180px;"></label>
+                        <span class="error-message seats-message-empty error-message-empty" style="margin-top:10px;display:inline-block;">Date is mandatory</span>
+                        <span class="error-message seats-invalid-date error-invalid-date" style="margin-top:10px;display:inline-block;">Invalid Date</span>
+                        <span class="error-message seats-future-date error-future-date" style="margin-top:10px;display:inline-block;">Enter only previous date</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="current_password" style="width:180px;">Present Count:</label>
+                    <div style="width:auto;display:inline-block;margin-top:10px;width:auto;">
+                        <span class="engagement-minutes sp-seats-count">0</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="current_password" style="width:180px;">Present Percentage:</label>
+                    <div style="width:auto;display:inline-block;margin-top:10px;width:auto;">
+                        <span class="engagement-activity sp-seatpercentage-count">0</span>%
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btnPassword address-btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+    @*</div>*@
+    @*Content Here*@
+
+    @*
+        </div>*@
+
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" language="javascript">
+        google.load("visualization", "1", { packages: ["corechart"] });
+        function GoogleChart() {
+            //PageLoad
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                url: '@Url.Action("Barchart")',
+                data: '{}',
+                success: function (chartsdata) {
+
+                    if (chartsdata == "Error") {
+                        alert("Unable to load case not analysis!");
+                    }
+                    else {
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('string', 'Month');
+                        data.addColumn('number', 'Percentage');
+
+                        for (var i = 0; i < chartsdata.length; i++) {
+                            data.addRow([chartsdata[i].Name, chartsdata[i].Value]);
+                        }
+                        //Apply All charts change in this page ****
+                        var chart = new google.visualization.ColumnChart(document.getElementById('chartdiv'));
+
+                        var options = {
+                            // title: 'Column Chart Sample',
+
+                            hAxis: {
+                                title: '',
+                                textStyle: {
+                                    fontSize: '11', color: '#919599'
+                                }
+                            },
+                            vAxis: {
+                                title: '',
+                                textStyle: {
+                                    fontSize: '11', color: '#919599'
+                                },
+                                minValue: 0,
+                                maxValue: 100,
+                                format: '#\'%\''
+                            },
+                            lineWidth: 1,
+                            legend: { position: 'none' },
+                            backgroundColor: { fill: "none" },
+                            colors: ['#1d77f2'],
+                            is3D: true,
+                            position: "top",
+                            chartArea: { width: "81%" }
+                        };
+                        chart.draw(data, options);
+                    }
+
+
+                },
+                error: function () {
+                    //alert("Error loading data! Please try again.");
+                }
+            });
+
+        }
+        $(function () {
+
+           
+            $('.seats-board').click(function () {
+                $('.error-message').hide();
+                $('.txtseatdate').val(getYesterdaysDate());
+              //  GetSeatsDetail(getYesterdaysDate());
+                $('#myModalSeats').modal('show');
+            });
+
+            function getYesterdaysDate() {
+                var date = new Date();
+                date.setDate(date.getDate() - 1);
+                return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+            }
+
+
+
+            function GetSeatsDetail(date) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/GetSeatsDetailByDate",
+                    data: { 'Date': date  },
+                    success: function (data) {
+                        console.log(data);
+                        $.each(JSON.parse(data), function (i, val) {
+                            $('.sp-seats-count').text(val["Count"]);
+                            $('.sp-seatpercentage-count').text(val["Percentage"]);
+
+                        });
+                    },
+                    error: function (data) {
+                        console.log('Error');
+                    }
+                });
+            }
+
+
+           
+            $('.btn-seat-submit').click(function () {
+                $('.error-message').hide();
+                //
+                if ($('.txtseatdate').val().trim() != "") {
+                    if (validDate($('.txtseatdate').val().trim())) {
+                        $('.seats-invalid-date').hide();
+                        if (Checkdate($('.txtseatdate').val().trim()))
+                            GetSeatsDetail($('.txtseatdate').val().trim());
+                        else
+                            $('.seats-future-date').hide();
+                    }
+                    else {
+                        $('.seats-invalid-date').show();
+                    }
+                }
+                else {
+                    $('.seats-message-empty').show();
+                }
+            });
+
+
+            $('body').on("focusout", ".txt-date", function () {
+                if ($(this).val() != "") {
+                    var isValid = Checkdate($(this).val());
+                    console.log(isValid);
+
+                    if (!validDate($(this).val())) {
+                        $(this).parent('.input-container').find('.error-invalid-date').show();
+                    }
+                    else if (!isValid) {
+                        $(this).parent('.input-container').find('.error-future-date').show();
+                    }
+                }
+                else {
+                    $('.error-message').hide();
+
+                }
+
+
+            });
+            $('body').on("keyup", ".txt-date", function () {
+
+                $(this).parent('.input-container').find('span').hide();
+            });
+            function validDate(text) {
+                var isValid = true;
+                var comp = text.split('/');
+                if (comp.length !== 3)
+                    return false;
+                if (comp[2].length != 4)
+                    return false;
+                if (comp[2] <= 1901)
+                    return false;
+                if (new Date(text).toString() == "Invalid Date")
+                    return false;
+                if (!isvalid_mdy(text))
+                    return false;
+                var TodayDate = new Date();
+                var endDate = new Date(text);
+
+                return isValid;
+            }
+            function isvalid_mdy(s) {
+
+                var day, A = s.match(/[1-9][\d]*/g);
+                try {
+                    A[0] -= 1;
+                    day = new Date(+A[2], A[0], +A[1]);
+
+                    if (day.getMonth() == A[0] && day.getDate() == A[1]) return day;
+                }
+                catch (er) {
+                    return er.message;
+                }
+
+            }
+
+
+
+            function Checkdate(date) {
+                var isAllow = false;
+                var now = new Date();
+                var selectedDate = new Date(date);
+                if (selectedDate < now && selectedDate != now) {
+                    isAllow = true;
+                } else {
+                    isAllow = false;
+                }
+                return isAllow;
+            }
+            var flag = 0;
+            $(".txt-date").on('keydown', function (e) {
+                flag++;
+                if (flag > 1) {
+                    e.preventDefault();
+                }
+            });
+            $(".txt-date").on('keyup', function (e) {
+                flag = 0;
+            });
+
+            $("body").on('keyup', '.txt-date', function (e) {
+                flags = 0;
+                if (e.keyCode != 193 && e.keyCode != 111) {
+                    if (e.keyCode != 8) {
+                        if ($(this).val().length == 2) {
+                            $(this).val($(this).val() + "/");
+                        } else if ($(this).val().length == 5) {
+                            $(this).val($(this).val() + "/");
+                        }
+                    } else {
+                        var temp = $(this).val();
+                        if ($(this).val().length == 5) {
+                            $(this).val(temp.substring(0, 4));
+                        } else if ($(this).val().length == 2) {
+                            $(this).val(temp.substring(0, 1));
+                        }
+                    }
+                } else {
+                    var temp = $(this).val();
+                    var tam = $(this).val().length;
+                    $(this).val(temp.substring(0, tam - 1));
+                }
+
+
+            });
+             
+            var hours = parseFloat($('#txtThermHours').val()).toFixed(0);
+            for (var i = 0; i < hours.length; i++) {
+                hours = hours.replace(hours.charAt(i), '0');
+            }
+            console.log(parseFloat("1" + hours));
+            var oTherm1 = new jlionThermometer(0, parseFloat("1" + hours), false, true);
+            oTherm1.RefreshByID('txtThermHours');   
+
+            var Dollars = parseFloat($('#txtThermDollars').val()).toFixed(0);
+            for (var i = 0; i < Dollars.length; i++) {
+                Dollars = Dollars.replace(Dollars.charAt(i), '0');
+            }
+
+            var oTherm = new jlionThermometerDollars(0, parseFloat("1" + Dollars), false, true);
+            oTherm.RefreshByID('txtThermDollars');
+
+
+
+
+            $('#bar').removeClass('barDollarThermo').addClass('barHoursThermo');
+            var height = $('.barHoursThermo').height() + 9;
+            $('.barHoursThermo').css('height', height + 'px');
+            $('#thermometer .Title').text('');
+            $('#thermometer .CurrentValue').text($('#txtThermHours').val() + " Hours");
+
+
+            $('#thermometer-hours .Title').text('');
+            $('#thermometer-hours .CurrentValue').text("$ " + parseFloat($('#txtThermDollars').val()).toFixed(2));
+
+            GoogleChart();
+            $('body').on('click', '.dropdown', function () {
+
+                setTimeout(function ()
+                { $('.dropdown').addClass('open'); }, 100);
+
+            });
+        });
+    </script>
+<script src="~/Content/Scripts/bootstrap.js"></script>
+    <style>
+        #chartdiv svg {
+            line-height: normal !important;
+        }
+    </style>
+
+
+}
+
+
+
+
+
+
+

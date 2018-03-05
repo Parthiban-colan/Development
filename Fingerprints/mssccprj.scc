@@ -1,0 +1,13 @@
+SCC = This is a Source Code Control file
+
+[Staff Registration.sln]
+SCC_Aux_Path = "\\192.168.1.9\vss\VSSDB"
+SCC_Project_Name = "$/FingerPrints/Fingerprints/Fingerprints/Fingerprints", WRPPAAAA
+
+[Staff Registration.csproj]
+SCC_Aux_Path = "\\192.168.1.9\vss\VSSDB"
+SCC_Project_Name = "$/Staff Registration/Version2.0/StaffRegistation/Staff Registration/Staff Registration", KUXOAAAA
+
+[Fingerprints.csproj]
+SCC_Aux_Path = "\\192.168.1.9\vss\VSSDB"
+SCC_Project_Name = "$/FingerPrints/Fingerprints/Fingerprints/Fingerprints", WRPPAAAA
