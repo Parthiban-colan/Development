@@ -194,6 +194,9 @@ namespace FingerprintsModel
         public string RejectParentId { get; set; }
         public string ParentId { get; set; }
         public string YakkrStatus { get; set; }
+
+        public string Enc_ClientId { get; set; }
+        public string ClientId { get; set; }
     }
 
     public class ClassRoomDetails

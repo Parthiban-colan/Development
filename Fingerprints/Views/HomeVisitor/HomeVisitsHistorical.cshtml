@@ -328,7 +328,7 @@
 
                 },
                 error: function (data) {
-                    customAlert('Some Error Occured.Please,try again later');
+                    customAlert("Session Ended Log Onto The System Again."); setTimeout(function () { window.location.href = HostedDir + '/login/Loginagency'; }, 2000);
                 }
             });
         }
@@ -374,7 +374,7 @@
 
                 },
                 error: function (data) {
-
+                    customAlert("Session Ended Log Onto The System Again."); setTimeout(function () { window.location.href = HostedDir + '/login/Loginagency'; }, 2000);
                 }
             });
 
@@ -554,7 +554,7 @@
                                 customAlert(response);
                         }
                     },
-                    error: function (response) { alert(response); }
+                    error: function (response) { customAlert("Session Ended Log Onto The System Again."); setTimeout(function () { window.location.href = HostedDir + '/login/Loginagency'; }, 2000); }
                 });
             }
 
@@ -947,7 +947,7 @@
                     bindGrid(LoadDates($('#txtMeetingDate').val(), $('#select_day').val()), data);
                 },
                 error: function (data) {
-
+                    customAlert("Session Ended Log Onto The System Again."); setTimeout(function () { window.location.href = HostedDir + '/login/Loginagency'; }, 2000);
                 }
 
             });
@@ -1167,6 +1167,7 @@
                     },
                     error: function (data) {
                         showBusy(false);
+                        customAlert("Session Ended Log Onto The System Again."); setTimeout(function () { window.location.href = HostedDir + '/login/Loginagency'; }, 2000);
                     }
                 })
 

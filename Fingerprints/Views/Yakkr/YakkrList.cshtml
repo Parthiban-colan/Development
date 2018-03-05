@@ -229,6 +229,81 @@
         .download-ic {
             color: #163b69;
         }
+        .modal-dialog-ch {
+    width:5 60%;
+}
+        #Casenotedevelopement {background: rgba(0,0,0,0.6);}
+        #Casenotedevelopement .modal-body {
+    background: #34495e none repeat scroll 0 0;
+    border: 6px solid #ffffff;
+    border-radius: 3px;
+    /* color: #ffffff; */
+    float: left;
+    padding: 15px 3%;
+    position: relative;
+    width: 100%;
+}
+        #Casenotedevelopement .close {
+    opacity: 1;
+    position: absolute;
+    right: -14px;
+    top: -15px;
+}
+        #Casenotedevelopement .modal-body > h2 {
+    margin-top: 0px;
+    float: left;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+    color: #fff;
+}
+        .addn-poup-div1 p {
+   color: #333;
+    font-size: 18px;
+    text-align: left;
+    font-weight: 400;
+    margin-top: 5px;
+    margin-bottom: 3px;
+    width: 100%;
+}
+         .addn-poup-div1 p a{display:inline-block;}
+        .download-ic {
+    font-size: 25px !important;
+    padding: 5px !important;
+    color:#163b69!important;
+}
+        .max_items_addn {
+    background: #f1f5f8 none repeat scroll 0 0;
+    border: 3px solid #ffffff;
+    float: left;
+    padding: 10px;
+    width: 100%;
+    border-radius: 4px;
+}
+        .addn-al {
+    margin-bottom: 10px;
+}
+        .addn-poup-div label {
+    color: #163b69;
+    font-size: 18px;
+    text-align: right;
+    font-weight:600;
+    margin-top: 5px;
+    margin-bottom: 3px;
+    width: 100%;
+}
+        
+.addn-poup-div1 input, .addn-poup-div1 textarea {
+    position: relative;
+    color: #333;
+    background: #fff;
+    border: 1px solid #fff;
+    border-radius: 0;
+    font-style: italic;
+    box-shadow: none;
+}
     </style>
     <div class="row">
         <div class="col-lg-12">
@@ -900,6 +975,100 @@
         </div>
     </div>
 
+<div class="modal fade scroll-modal in" id="Casenotedevelopement" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-ch">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal"><img src="/Content/CaseNote/images/close.png"></button>
+                <h2 id="CaseNoteHeading" class="extra-title muted">Case Note Development Team</h2>
+                <div class="max_items_addn popup-addn-scroll">
+                    <div class="col-xs-12 addn-al" style="padding: 0;">
+                        <div class="col-sm-4">
+                            <div class="addn-poup-div">
+                                <label>Client :</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="addn-poup-div1">
+                                <p id="caseNoteClientName">Tucker :</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 addn-al" style="padding: 0;">
+                        <div class="col-sm-4">
+                            <div class="addn-poup-div">
+                                <label>Title :</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="addn-poup-div1">
+                                <p id="caseNoteTitle">Case Note</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 addn-al" style="padding: 0;">
+                        <div class="col-sm-4">
+                            <div class="addn-poup-div">
+                                <label>Date :</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="addn-poup-div1">
+                                <p id="caseNoteDate">03/05/2018</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 addn-al" style="padding: 0;">
+                        <div class="col-sm-4">
+                            <div class="addn-poup-div">
+                                <label>Notes :</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="addn-poup-div1">
+                                <p id="caseNoteNotes">Case Note</p>
+                            </div>
+                        </div>
+                    </div>
+                   
+                  
+
+                    <div class="col-xs-12 addn-al" style="padding: 0;">                  
+                        <div id="Attachments">
+                            <div class="col-sm-12 adddivspace" style="padding: 0;">
+                                <div class="col-sm-4">
+                                    <div class="addn-poup-div">
+                                        <label>Attachment(s) :</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="addn-poup-div1" id="attachements_div">
+                                        <a target="_blank" title="Download" href="#"><i class="fa fa-download download-ic"></i></a>
+                                        <a target="_blank" title="Download" href="#"><i class="fa fa-download download-ic"></i></a> 
+                                        <a target="_blank" title="Download" href="#"><i class="fa fa-download download-ic"></i></a>         
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="col-xs-12" style="margin-top:10px;margin-bottom:0px;padding:0;">
+                    <div class="btnwrp_subcal" style="padding:0; margin:0;">
+                        <button type="button" class="my-btn pull-right" data-dismiss="modal" style="background:#db4437;">Exit</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
     <input type="hidden" id="centerIdGrid" />
 
     <input type="hidden" id="isDisabilityRole" value="@Session["RoleID"].ToString()" />
@@ -1567,6 +1736,45 @@
                         }
                     });
                     $('#transportation1').modal('show');
+                }
+
+                else if($('.yakkr-code').text().trim()=="350")
+                {
+                    $.ajax({
+                        url: '/Yakkr/GetCaseNoteDetailsByYakkr',
+                        datatype: 'json',
+                        type: 'post',
+                        data: { clientId: ClientId, yakkrId: YakkrID },
+                        success:function(data)
+                        {
+
+                            var caseNoteModal = $('#Casenotedevelopement');
+                            var attachmentDiv = '';
+                            if (data != null)
+                            {
+                                caseNoteModal.find('#caseNoteClientName').html(data.ClientName);
+                                caseNoteModal.find('#caseNoteTitle').html(data.CaseNotetitle);
+                                caseNoteModal.find('#caseNoteDate').html(data.CaseNoteDate);
+                                caseNoteModal.find('#caseNoteNotes').html(data.Note);
+                                if(data.AttachmentIdArray.length>0)
+                                {
+                                    $.each(data.AttachmentIdArray, function (i, attach) {
+
+                                        attachmentDiv+="<a target='_blank' title='Click here to download' href='" + HostedDir + "/Agencyuser/getpdfimage1/" + attach + ",CaseNote,0'><i class='fa fa-download download-ic' style='font-size:18px!important;'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;"
+                                        //attachmentDiv+='<a target="_blank" accesskey='+attach+'  title="Click here to download" href="#"><i class="fa fa-download download-ic"></i></a>'
+                                    });
+
+                                }
+                              $('#attachements_div').html(attachmentDiv)
+                            }
+                            $('#Casenotedevelopement').modal('show');
+
+                        },
+                        error:function(data)
+                        {
+
+                        }
+                    });
                 }
 
             });

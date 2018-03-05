@@ -618,5 +618,58 @@ namespace FingerprintsData
             }
             return dictEmail;
         }
+
+
+        public RosterNew.CaseNote GetCaseNoteByYakkr(string clientId, string yakkrId)
+        {
+            RosterNew.CaseNote casenote = new RosterNew.CaseNote();
+            StaffDetails staffDetails = StaffDetails.GetInstance();
+            try
+            {
+                if (Connection.State == ConnectionState.Open)
+                    Connection.Close();
+
+                command.Connection = Connection;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "USP_GetCaseNoteInfoByYakkrId";
+                command.Parameters.Clear();
+                command.Parameters.Add(new SqlParameter("@AgencyId", staffDetails.AgencyId));
+                command.Parameters.Add(new SqlParameter("@UserId", staffDetails.UserId));
+                command.Parameters.Add(new SqlParameter("@YakkrId", yakkrId));
+                command.Parameters.Add(new SqlParameter("@RoleId", staffDetails.RoleId));
+                command.Parameters.Add(new SqlParameter("@ClientId", clientId));
+                Connection.Open();
+                DataAdapter = new SqlDataAdapter(command);
+                _dataset = new DataSet();
+                DataAdapter.Fill(_dataset);
+                Connection.Close();
+                if (_dataset != null)
+                {
+                    if (_dataset.Tables[0].Rows.Count > 0)
+                    {
+                        casenote = new RosterNew.CaseNote();
+
+                        casenote.ClientId = _dataset.Tables[0].Rows[0]["ClientId"].ToString();
+                        casenote.ClientName = _dataset.Tables[0].Rows[0]["ClientName"].ToString();
+                        casenote.CaseNoteDate = _dataset.Tables[0].Rows[0]["CaseNoteDate"].ToString();
+                        casenote.CaseNoteid = _dataset.Tables[0].Rows[0]["CaseNoteId"].ToString();
+                        casenote.Note = _dataset.Tables[0].Rows[0]["Notes"].ToString();
+                        casenote.CaseNotetitle = _dataset.Tables[0].Rows[0]["Title"].ToString();
+                        casenote.AttachmentIdArray = (from DataRow dr1 in _dataset.Tables[0].Rows
+                                                      select dr1["AttachmentId"].ToString()
+                                                    ).ToArray();
+
+                    }
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                clsError.WriteException(ex);
+            }
+            return casenote;
+        }
     }
 }

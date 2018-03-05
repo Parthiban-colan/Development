@@ -1083,13 +1083,15 @@ namespace FingerprintsData
                                                           {
                                                               ClientName = dr1["name"].ToString(),
                                                               ClassStartDate = dr1["Dateofclassstartdate"].ToString(),
-                                                              Image = dr1["ProfilePic"].ToString() == "" ? "" : Convert.ToBase64String((byte[])dr1["ProfilePic"]),
+                                                              //Image = dr1["ProfilePic"].ToString() == "" ? "" : Convert.ToBase64String((byte[])dr1["ProfilePic"]),
                                                               Foster = dr1["fosterChild"].ToString(),
                                                               Gender = dr1["gender"].ToString(),
+                                                              CenterName=dr1["CenterName"].ToString(),
                                                               OverIncome = dr1["OverIncome"].ToString(),
                                                               AttendancePercentage = Math.Round(Convert.ToDouble(dr1["AttendancePercentage"])).ToString(),
                                                               ChildAttendance = dr1["AttendanceType"].ToString(),
-                                                              Dob =dr1["Dob"].ToString()
+                                                              Dob =dr1["Dob"].ToString(),
+                                                              ClientId=EncryptDecrypt.Encrypt64(dr1["ClientId"].ToString())
                                                           }).ToList();
                     }
                     if (_dataset.Tables[1].Rows.Count > 0)
@@ -1861,7 +1863,8 @@ namespace FingerprintsData
                                                            CenterName = dr1["CenterName"].ToString(),
                                                            ContactStatus = dr1["ContactStatus"].ToString(),
                                                            YakkrStatus = dr1["YakkrStatus"].ToString(),
-                                                           RejectParentId = dr1["RejectParentId"].ToString()
+                                                           RejectParentId = dr1["RejectParentId"].ToString(),
+                                                           Enc_ClientId=EncryptDecrypt.Encrypt64(dr1["ChildId"].ToString())
                                                        }).ToList();
                     }
                 }

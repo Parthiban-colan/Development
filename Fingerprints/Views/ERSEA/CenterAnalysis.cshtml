@@ -22,6 +22,10 @@
             padding-right: 0;
         }
 
+        .searchTextAll
+        {
+            height:38px;
+        }
 
         .search-group{
           
@@ -267,13 +271,16 @@
                             </div>
 
                             <div style="float:left;padding-top:0px;" class="col-lg-4 input-group date">
-                                <input type="text" class="form-control searchTextAll" placeholder="Search by Name..." />
-                                <span class="input-group-addon searchByClientName search-group" onclick="searchByClientName('#FosterDisplaymodal',this);" style="background-color: #295b8f;">
+                                <input type="text" class="form-control searchTextAll" placeholder="Search by Name..."/>
+                                <span class="input-group-addon searchByClientName search-group"  onclick="searchByClientName('#FosterDisplaymodal',this);" style="background-color: #295b8f;height:38px;">
                                     
                                     <i class="glyphicon glyphicon-search" style="color: #fff;"></i><span class="searchName">Search</span>
                                 </span>
                             </div>
 
+                            <div style="display:inline-block;width:auto;">
+                                <button  class="download-excel btn btn-primary"  style="margin-left:20px;line-height:23px!important;border-radius:4px;background-color:#295b8f;border-color:#295b8f;" onclick="downloadReportExcel('#FosterDisplaymodal',this);">Export to Excel</button>
+                            </div>
                          
                                 <div style="display:inline-block;width:auto;float:right;">
                                     <button id="btnsearch1" class="my-btn" onclick="btnSearch(this);" style="margin-right:1px;border-top-right-radius:4px;border-bottom-right-radius:4px;">Search</button>
@@ -290,7 +297,6 @@
                                     <thead class="table-hd scroll-thead">
                                         <tr>
                                             <th>Name</th>
-                                            <th>Image</th>
                                             <th>Gender</th>
                                             <th>Date of Birth</th>
                                             <th>Start Date</th>
@@ -345,8 +351,7 @@
                         </div>
                     </div>
                 </div>
-
-
+                
             </div>
         </div>
     </div>
@@ -374,6 +379,10 @@
 
                                     <i class="glyphicon glyphicon-search" style="color: #fff;"></i><span class="searchName">Search</span>
                                 </span>
+                            </div>
+
+                            <div style="display:inline-block;width:auto;" class="col-lg-4 text-right">
+                                <button class="download-excel btn btn-primary" style="margin-left:20px;line-height:23px!important;border-radius:4px;background-color:#295b8f;border-color:#295b8f;" onclick="downloadReportExcel('#EnrolledModal', this);">Export to Excel</button>
                             </div>
 
                         </div>
@@ -470,6 +479,10 @@
 
                                     <i class="glyphicon glyphicon-search" style="color: #fff;"></i><span class="searchName">Search</span>
                                 </span>
+                            </div>
+
+                            <div style="display:inline-block;width:auto;" class="col-lg-4 text-right">
+                                <button class="download-excel btn btn-primary" style="margin-left:20px;line-height:23px!important;border-radius:4px;background-color:#295b8f;border-color:#295b8f;" onclick="downloadReportExcel('#WaitingModal', this);">Export to Excel</button>
                             </div>
                         </div>
 
@@ -568,6 +581,10 @@
                                 </span>
                             </div>
 
+                            <div style="display:inline-block;width:auto;" class="col-lg-4 text-right">
+                                <button class="download-excel btn btn-primary" style="margin-left:20px;line-height:23px!important;border-radius:4px;background-color:#295b8f;border-color:#295b8f;" onclick="downloadReportExcel('#WithdrawnModal', this);">Export to Excel</button>
+                            </div>
+
                         </div>
 
                        
@@ -660,6 +677,10 @@
 
                                     <i class="glyphicon glyphicon-search" style="color: #fff;"></i><span class="searchName">Search</span>
                                 </span>
+                            </div>
+
+                            <div style="display:inline-block;width:auto;" class="col-lg-4 text-right">
+                                <button class="download-excel btn btn-primary" style="margin-left:20px;line-height:23px!important;border-radius:4px;background-color:#295b8f;border-color:#295b8f;" onclick="downloadReportExcel('#DroppedModal', this);">Export to Excel</button>
                             </div>
                         </div>
 
@@ -756,6 +777,10 @@
                                     <i class="glyphicon glyphicon-search" style="color: #fff;"></i><span class="searchName">Search</span>
                                 </span>
                             </div>
+
+                            <div style="display:inline-block;width:auto;" class="col-lg-4 text-right">
+                                <button class="download-excel btn btn-primary" style="margin-left:20px;line-height:23px!important;border-radius:4px;background-color:#295b8f;border-color:#295b8f;" onclick="downloadReportExcel('#ReturningModal', this);">Export to Excel</button>
+                            </div>
                         </div>
 
 
@@ -847,6 +872,10 @@
 
                                     <i class="glyphicon glyphicon-search" style="color: #fff;"></i><span class="searchName">Search</span>
                                 </span>
+                            </div>
+
+                            <div style="display:inline-block;width:auto;" class="col-lg-4 text-right">
+                                <button class="download-excel btn btn-primary" style="margin-left:20px;line-height:23px!important;border-radius:4px;background-color:#295b8f;border-color:#295b8f;" onclick="downloadReportExcel('#GraduatingModal', this);">Export to Excel</button>
                             </div>
                         </div>
 
@@ -941,6 +970,10 @@
                                     <i class="glyphicon glyphicon-search" style="color: #fff;"></i><span class="searchName">Search</span>
                                 </span>
                             </div>
+
+                            <div style="display:inline-block;width:auto;" class="col-lg-4 text-right">
+                                <button class="download-excel btn btn-primary" style="margin-left:20px;line-height:23px!important;border-radius:4px;background-color:#295b8f;border-color:#295b8f;" onclick="downloadReportExcel('#FosterModal', this);">Export to Excel</button>
+                            </div>
                         </div>
 
 
@@ -1031,6 +1064,10 @@
 
                                     <i class="glyphicon glyphicon-search" style="color: #fff;"></i><span class="searchName">Search</span>
                                 </span>
+                            </div>
+
+                            <div style="display:inline-block;width:auto;" class="col-lg-4 text-right">
+                                <button class="download-excel btn btn-primary" style="margin-left:20px;line-height:23px!important;border-radius:4px;background-color:#295b8f;border-color:#295b8f;" onclick="downloadReportExcel('#HomeLessModal', this);">Export to Excel</button>
                             </div>
                         </div>
 
@@ -1125,6 +1162,10 @@
                                     <i class="glyphicon glyphicon-search" style="color: #fff;"></i><span class="searchName">Search</span>
                                 </span>
                             </div>
+                            <div style="display:inline-block;width:auto;" class="col-lg-4 text-right">
+                                <button class="download-excel btn btn-primary" style="margin-left:20px;line-height:23px!important;border-radius:4px;background-color:#295b8f;border-color:#295b8f;" onclick="downloadReportExcel('#OverIncomeModal', this);">Export to Excel</button>
+                            </div>
+
                         </div>
 
                         <div id="no-more-tables8" class="col-xs-12 no-padding" style="margin-bottom:0;">
@@ -1214,6 +1255,10 @@
 
                                     <i class="glyphicon glyphicon-search" style="color: #fff;"></i><span class="searchName">Search</span>
                                 </span>
+                            </div>
+
+                            <div style="display:inline-block;width:auto;" class="col-lg-4 text-right">
+                                <button class="download-excel btn btn-primary" style="margin-left:20px;line-height:23px!important;border-radius:4px;background-color:#295b8f;border-color:#295b8f;" onclick="downloadReportExcel('#ExternalLeadsModal', this);">Export to Excel</button>
                             </div>
                         </div>
 

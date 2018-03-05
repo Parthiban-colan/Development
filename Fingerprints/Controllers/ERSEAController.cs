@@ -805,22 +805,93 @@ namespace Fingerprints.Controllers
         }
 
 
-        public ActionResult DownloadERSEAReport(string Centerid, string Classroom = "")
+        public ActionResult DownloadERSEAReport(string centerId,string programId,string reportFor,bool isAllCenter)
         {
             try
             {
-                ScreeningMatrix scr = new ScreeningMatrix();
+                ChildrenInfoClass infoModel = new ChildrenInfoClass();
+                List<SelectListItem> parentNameList = new List<SelectListItem>();
                 Export export = new Export();
                 Response.Clear();
                 Response.Buffer = true;
                 Response.Charset = "";
                 Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                Response.AddHeader("content-disposition", "attachment;filename=ERSEA Status Report " + DateTime.Now.ToString("MM/dd/yyyy") + ".xlsx");
-                System.IO.MemoryStream ms = export.ExportERSEACenterAnalysisReport(scr);
+                //Response.AddHeader("content-disposition", "attachment;filename=ERSEA Status Report " + DateTime.Now.ToString("MM/dd/yyyy") + ".xlsx");
+                CenterAnalysisParameters parameters = new CenterAnalysisParameters
+                {
+                    CenterId = (centerId == "0") ? 0 : Convert.ToInt64(EncryptDecrypt.Decrypt64(centerId)),
+                    ProgramId = (programId == "0") ? 0 : Convert.ToInt64(EncryptDecrypt.Decrypt64(programId.ToString())),
+                    RequestedPage = 1,
+                    SearchText = "",
+                    Take = 500,
+                    Skip = 0
+
+                };
+
+                switch(reportFor)
+                {
+                    case "#FosterDisplaymodal":
+                        Response.AddHeader("content-disposition", "attachment;filename=Enrolled Client Report " + DateTime.Now.ToString("MM/dd/yyyy") + ".xlsx");
+                        infoModel =  new ERSEAData().GetChildrenByCenter(parameters);
+                        break;
+
+                    case "#EnrolledModal":
+                        Response.AddHeader("content-disposition", "attachment;filename=Enrolled Client Report " + DateTime.Now.ToString("MM/dd/yyyy") + ".xlsx");
+                        infoModel = new ERSEAData().GetEnrolledChildrenData(parameters);
+                        break;
+                    case "#WithdrawnModal":
+                        Response.AddHeader("content-disposition", "attachment;filename=Withdrawn Client Report " + DateTime.Now.ToString("MM/dd/yyyy") + ".xlsx");
+                        infoModel = new ERSEAData().GetWithdrawnChildList(parameters);
+                        break;
+                    case "#DroppedModal":
+                        Response.AddHeader("content-disposition", "attachment;filename=Dropped Client Report " + DateTime.Now.ToString("MM/dd/yyyy") + ".xlsx");
+                        infoModel = new ERSEAData().GetDroppedChildList(parameters);
+                        break;
+
+                    case "#WaitingModal":
+                        Response.AddHeader("content-disposition", "attachment;filename=Waiting Client Report " + DateTime.Now.ToString("MM/dd/yyyy") + ".xlsx");
+                        infoModel = new ERSEAData().GetWatitingChildrenData(parameters);
+                        break;
+                    case "#ReturningModal":
+
+                        Response.AddHeader("content-disposition", "attachment;filename=Returning Client Report " + DateTime.Now.ToString("MM/dd/yyyy") + ".xlsx");
+
+                        infoModel = new ERSEAData().GetReturningChildren(parameters);
+                        break;
+                    case "#GraduatingModal":
+                        Response.AddHeader("content-disposition", "attachment;filename=Graduating Client Report " + DateTime.Now.ToString("MM/dd/yyyy") + ".xlsx");
+
+                        infoModel = new ERSEAData().GetGraduatingChildrenData(parameters);
+                        break;
+                    case "#OverIncomeModal":
+                        Response.AddHeader("content-disposition", "attachment;filename=Over Income Client Report " + DateTime.Now.ToString("MM/dd/yyyy") + ".xlsx");
+
+                        infoModel = new ERSEAData().GetOverIncomeChildrenData(out parentNameList, parameters);
+                        break;
+                    case "#FosterModal":
+                        Response.AddHeader("content-disposition", "attachment;filename=Foster Client Report " + DateTime.Now.ToString("MM/dd/yyyy") + ".xlsx");
+
+                        infoModel = new ERSEAData().GetFosterChildData(parameters);
+                        break;
+                    case "#HomeLessModal":
+                        Response.AddHeader("content-disposition", "attachment;filename=Homeless Client Report " + DateTime.Now.ToString("MM/dd/yyyy") + ".xlsx");
+
+                        infoModel = new ERSEAData().GetHomelessChildrenData(parameters);
+                        break;
+                    case "#ExternalLeadsModal":
+                        Response.AddHeader("content-disposition", "attachment;filename=External Leads Report " + DateTime.Now.ToString("MM/dd/yyyy") + ".xlsx");
+
+                        infoModel = new ERSEAData().GetLeadsChildrenData(parameters);
+                        break;
+                }
+
+
+                System.IO.MemoryStream ms = export.ExportERSEACenterAnalysisReport(reportFor,infoModel,parentNameList,isAllCenter);
                 ms.WriteTo(Response.OutputStream);
                 Response.Flush();
                 Response.End();
                 return View();
+               // return File(fullPath, "application/vnd.ms-excel", file);
             }
             catch (Exception Ex)
             {

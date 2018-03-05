@@ -281,5 +281,22 @@ namespace Fingerprints.Controllers
 
 
 
+        public JsonResult GetCaseNoteDetailsByYakkr(string clientId, string yakkrId)
+        {
+            RosterNew.CaseNote caseNote = new RosterNew.CaseNote();
+            try
+            {
+                caseNote = new YakkrData().GetCaseNoteByYakkr(clientId, yakkrId);
+
+            }
+            catch(Exception ex)
+            {
+                clsError.WriteException(ex);
+            }
+            return Json(caseNote,JsonRequestBehavior.AllowGet);
+        }
+
+
+
     }
 }

@@ -722,16 +722,27 @@ function getEnrolledChildrens(center, prog_id, reqPage, pgSize) {
 
                     bindEle += '<td data-title="Class Start Date">' + enrChild.ClassStartDate + '</td>\
                         <td data-title="Attendance">' + enrChild.AttendancePercentage + '% </td><td data-title="Over Income">' + enrChild.OverIncome + '</td><td data-title="Foster">' + foster + '</td>';
+                //    bindEle += (enrChild.ChildAttendance == '1') ?
+                //'<td data-title="Present/Absent"><i style="color:#3c763d;" title="Present" class="fa fa-check"></i></td>' :
+                //(enrChild.ChildAttendance == '2') ? '<td data-title="Present/Absent"><i style="color:#ff2222;" title="Absent" class="fa fa-times"></i></td>' :
+                //(enrChild.ChildAttendance == '3') ? '<td data-title="Present/Absent"><i style="color:#ff2222;" title="Left Earlier" class="fa fa-times"></i></td>'
+                //: '<td data-title="Present/Absent"><i style="color:#ff2222;" title="Absent" class="fa fa-times"></i></td>';
+                    //    bindEle += '</tr>';
+
+
                     bindEle += (enrChild.ChildAttendance == '1') ?
-                '<td data-title="Present/Absent"><i style="color:#3c763d;" title="Present" class="fa fa-check"></i></td>' :
-                (enrChild.ChildAttendance == '2') ? '<td data-title="Present/Absent"><i style="color:#ff2222;" title="Absent" class="fa fa-times"></i></td>' :
-                (enrChild.ChildAttendance == '3') ? '<td data-title="Present/Absent"><i style="color:#ff2222;" title="Left Earlier" class="fa fa-times"></i></td>'
-                : '<td data-title="Present/Absent"><i style="color:#ff2222;" title="Absent" class="fa fa-times"></i></td>';
+            '<td data-title="Present/Absent"><i style="color:#3c763d;" title="Present" class="fa fa-check"></i></td>' :
+            (enrChild.ChildAttendance == '2') ? '<td data-title="Present/Absent"><i  style="color:#9c27b0;" title="Absent Excused" class="fa fa-times"></i></td>' :
+            (enrChild.ChildAttendance == '3') ? '<td data-title="Present/Absent"><i style="color:#ff5722;" title="Absent No Show" class="fa fa-times"></i></td>'
+            : (enrChild.ChildAttendance == '4') ? '<td data-title="Present/Absent"><i style="color:#ff5722;" title="Present Other" class="fa fa-times"></i></td>' :
+             (enrChild.ChildAttendance == '0') ? '<td data-title="Present/Absent"><i style="color:#ff2222;" title="Not Checked In" class="fa fa-user-times"></i></td>' :
+           '<td data-title="Present/Absent"><i style="color:#ff5722;" title="Absent" class="fa fa-times"></i></td>';
                     bindEle += '</tr>';
+
                 });
             }
             else {
-                bindEle = 'No details found';
+                bindEle = '<tr style="color:#333;"><th style="height:120px;">Records Not Found</th></tr>';
             }
             $('#EnrolledModal').find('.enrolledModalBody').html(bindEle);
             $('#EnrolledModal').modal('show');
@@ -800,7 +811,7 @@ function getWithdrawnChildren(centerId, prog_id, reqPage, pgSize) {
                 });
             }
             else {
-                bindEle = 'No details found';
+                bindEle = '<tr style="color:#333;"><th style="height:120px;">Records Not Found</th></tr>';
             }
             $('#WithdrawnModal').find('.withdrwnChildren').html(bindEle);
             $('#WithdrawnModal').modal('show');
@@ -874,7 +885,7 @@ function getDroppedChildren(centerId, prog_id, reqPage, pgSize) {
                 });
             }
             else {
-                bindEle = 'No details found';
+                bindEle = '<tr style="color:#333;"><th style="height:120px;">Records Not Found</th></tr>';
             }
             $('#DroppedModal').find('.droppedChildren').html(bindEle);
             $('#DroppedModal').modal('show');
@@ -942,7 +953,7 @@ function getWaitingChildren(centerId, prog_id, reqPage, pgSize) {
                 });
             }
             else {
-                bindEle = 'No details found';
+                bindEle = '<tr style="color:#333;"><th style="height:120px;">Records Not Found</th></tr>';
             }
             $('#WaitingModal').find('.waitingChildren').html(bindEle);
             $('#WaitingModal').modal('show');
@@ -1020,7 +1031,7 @@ function getReturningChildrens(centerId, prog_id, reqPage, pgSize) {
                 });
             }
             else {
-                bindEle = 'No details found';
+                bindEle = '<tr style="color:#333;"><th style="height:120px;">Records Not Found</th></tr>';
             }
             $('#ReturningModal').find('.returningChildren').html(bindEle);
             $('#ReturningModal').modal('show');
@@ -1097,7 +1108,7 @@ function getGraduatingChildrens(centerId, prog_id, reqPage, pgSize) {
                 });
             }
             else {
-                bindEle = 'No details found';
+                bindEle = '<tr style="color:#333;"><th style="height:120px;">Records Not Found</th></tr>';
             }
             $('#GraduatingModal').find('.gradChildren').html(bindEle);
             $('#GraduatingModal').modal('show');
@@ -1185,7 +1196,7 @@ function getOverIncomChildren(centerId, prog_id, reqPage, pgSize) {
                 });
             }
             else {
-                bindEle = 'No details found';
+                bindEle = '<tr style="color:#333;"><th style="height:120px;">Records Not Found</th></tr>';
             }
             $('#OverIncomeModal').find('.overIncomeChildren').html(bindEle);
             $('#OverIncomeModal').modal('show');
@@ -1226,7 +1237,7 @@ function getFosterChild(centerId, prog_id, reqPage, pgSize) {
 
                 getTotalRecord(data.TotalRecord, '#FosterModal');
                 $('#FosterModal').find('.totalCountSpan').text(data.TotalRecord);
-                lengthTd = data.childInfo.FosterChildrenList.length;
+                lengthTd = data.FosterChildrenList.length;
 
                 if (centerId === 0) {
                     $('#FosterModal').find('#centerName').html('Client List');
@@ -1234,7 +1245,7 @@ function getFosterChild(centerId, prog_id, reqPage, pgSize) {
 
                 }
                 else {
-                    $('#FosterModal').find('#centerName').html(data[0].CenterName);
+                    $('#FosterModal').find('#centerName').html(data.FosterChildrenList[0].CenterName);
                     $('#FosterModal').find('.center_name_head').hide();
 
                 }
@@ -1260,9 +1271,16 @@ function getFosterChild(centerId, prog_id, reqPage, pgSize) {
                         bindDiv += '<td data-title="Attachment" style="text-align:center;"><a style="cursor:pointer;" class="attachment"  title="Download"  data-type="pdf"><img  style="display:none;" src="data:application/octet-stream;base64,' + fosterchild.FileAttached + '"><i class="fa fa-download download-ic"></i></a></td>';
                     }
                 });
-                $('#FosterModal').find('.fosterChildren').html(bindDiv);
-                $('#FosterModal').modal('show');
+               
             }
+            else
+            {
+                bindDiv += '<tr style="color:#333;"><th style="\
+                height: 120px;\
+                ">Records not found</th></tr>';
+            }
+            $('#FosterModal').find('.fosterChildren').html(bindDiv);
+            $('#FosterModal').modal('show');
 
         }
 
@@ -1328,7 +1346,7 @@ function getHomelessChildren(centerId, prog_id, reqPage, pgSize) {
                 });
             }
             else {
-                bindEle = 'No details found';
+                bindEle = '<tr style="color:#333;"><th style="height:120px;">Records Not Found</th></tr>';
             }
             $('#HomeLessModal').find('.homeLessChildren').html(bindEle);
             $('#HomeLessModal').modal('show');
@@ -1396,8 +1414,12 @@ function getLeadsChildren(centerId, prog_id, reqPage, pgSize) {
                 });
             }
             else {
-                bindEle = 'No details found';
+           
+                bindEle += '<tr style="color:#333;"><th style="\
+                height: 120px;\
+                ">Records Not Found</th></tr>';
             }
+           
             $('#ExternalLeadsModal').find('.LeadsModalBody').html(bindEle);
             $('#ExternalLeadsModal').modal('show');
         }
@@ -1422,23 +1444,9 @@ function bindGridByCenter(binData) {
             else if (value1.Foster == "2") {
                 foster = "N"
             }
-            if (value1.Image == "" && value1.Gender == "2") {
-                image = '<img class="roundimage"  width="50" height="50"  src="/Content/img/ic_female.png" />';
-            }
-            else if (value1.Image == "" && value1.Gender == "1") {
-                image = '<img class="roundimage" width="50" height="50"   src="/Content/img/ic_male.png" />';
-            }
-            else if (value1.Image == "" && value1.Gender == "3") {
-                image = '<img class="roundimage"  width="50" height="50"  src="/Content/img/ic_male_default.png" />';
-            }
-            else if (value1.Image != "") {
-                image = '<img class="roundimage" width="50" height="50"   src="data:image/jpg;base64,' + value1.Image + '"/></td>'
-            }
-            else {
-                image = '<img class="roundimage"  width="50" height="50"  src="/Content/img/download.jpg" />';
-            }
+            value += '<tr><td data-title="Name" style="cursor:pointer;text-decoration:underline;text-decoration-color:#337ab7;" class="childName" onmouseenter="getChildrenImage(this); " clientId=' + value1.ClientId + '><div>' + value1.ClientName + '<span class="tooltiptext"></span></div></td>';
 
-            value += '<tr><td data-title="Name">' + value1.ClientName + '</td><td data-title="Image">' + image + '</td>';
+
             value += (value1.Gender == "1") ? '<td data-title="Gender">Male</td>' : (value1.Gender == "2") ? '<td data-title="Gender">Female</td>' : '<td data-title="Gender">Others</td>';
             value += '<td data-title="DOB">' + value1.Dob + '</td>';
             value += '<td data-title="Start Date">' + value1.ClassStartDate + '</td>\
@@ -1448,15 +1456,17 @@ function bindGridByCenter(binData) {
 
             value += (value1.ChildAttendance == '1') ?
                 '<td data-title="Present/Absent"><i style="color:#3c763d;" title="Present" class="fa fa-check"></i></td>' :
-                (value1.ChildAttendance == '2') ? '<td data-title="Present/Absent"><i style="color:#ff2222;" title="Absent" class="fa fa-times"></i></td>' :
-                (value1.ChildAttendance == '3') ? '<td data-title="Present/Absent"><i style="color:#ff2222;" title="Left Earlier" class="fa fa-times"></i></td>'
-                : '<td data-title="Present/Absent"><i style="color:#ff2222;" title="Absent" class="fa fa-times"></i></td>';
+                (value1.ChildAttendance == '2') ? '<td data-title="Present/Absent"><i  style="color:#9c27b0;" title="Absent Excused" class="fa fa-times"></i></td>' :
+                (value1.ChildAttendance == '3') ? '<td data-title="Present/Absent"><i style="color:#ff5722;" title="Absent No Show" class="fa fa-times"></i></td>'
+                : (value1.ChildAttendance == '4') ? '<td data-title="Present/Absent"><i style="color:#ff5722;" title="Present Other" class="fa fa-times"></i></td>' :
+                 (value1.ChildAttendance == '0') ? '<td data-title="Present/Absent"><i style="color:#ff2222;" title="Not Checked In" class="fa fa-user-times"></i></td>' :
+               '<td data-title="Present/Absent"><i style="color:#ff5722;" title="Absent" class="fa fa-times"></i></td>';
             value += '</tr>';
         });
     }
 
     else {
-        value = 'No detail Found';
+        value = '<tr style="color:#333;"><th style="height:120px;">Records Not Found</th></tr>';
     }
 
 
@@ -1698,19 +1708,63 @@ function searchByClientName(clsname, ele)
     cleanValidation();
     var inputText=$(ele).siblings('.searchTextAll');
 
-    if (inputText.val()=== null || inputText.val() === '')
-    {
-        //  plainValidation('#' + inputText.attr('id') + '');
-        inputText.css("background-color", 'pink');
-        customAlert('Please enter name to search');
-        return false;
-    }
-    else {
+    //if (inputText.val()=== null || inputText.val() === '')
+    //{
+    //    //  plainValidation('#' + inputText.attr('id') + '');
+    //    inputText.css("background-color", 'pink');
+    //    customAlert('Please enter name to search');
+    //    return false;
+    //}
+    //else {
 
         requestedPage = 1;
         pageSize = 10;
         var ctrID=$(clsname).find('#ddlpagetodisplay').attr('center');
         callDisplayAjaxMethods(requestedPage, pageSize, clsname, ctrID);
         return true;
+    //}
+}
+
+
+function downloadReportExcel(clsname, ele)
+{
+    var centerId = $(clsname).find('#ddlpagetodisplay').attr('center');
+    var progId = $('.select_programType').val();
+    var isallCenter = (centerId === '0') ? true : false;
+    clsname = clsname.replace("#", "%23");
+    window.location.href = HostedDir + "/ERSEA/DownloadERSEAReport?centerId=" + centerId + "&programId="+progId+"&reportFor="+""+clsname+""+"&isAllCenter=" + isallCenter;
+
+    //$.ajax({
+
+    //    url: '/ERSEA/DownloadERSEAReport',
+    //    datatype: 'json',
+    //    contenttype: "application/json; charset=utf-8",
+    //    type: 'GET',
+    //    data: { centerId: centerId, programId: progId, reportFor: clsname, isAllCenter: isallCenter },
+    //    success:function(data)
+    //    {
+
+    //    },
+    //    error:function(data)
+    //    {
+
+    //    }
+
+    //});
+}
+
+
+
+function DownLoadExcelFile() {
+
+    if ($('#DivclientmissingList > tbody > tr').length > 0) {
+        if (Center != null) {
+            var centerid = $('#Classroommatrix').val() == null ? "" : $('#Classroommatrix').val();
+            window.location.href = HostedDir + "/Nurse/DownloadScreeningMatrixExcel?Centerid=" + $(Center).attr("accesskey") + "&Classroom=" + centerid;
+        }
+    }
+    else {
+        customAlert("No record to print.");
     }
 }
+

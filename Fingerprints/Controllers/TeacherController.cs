@@ -1,25 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using FingerprintsData;
 using FingerprintsModel;
 using Fingerprints.Filters;
-using System.Threading;
-using Fingerprints.ViewModel;
-using System.Globalization;
 using System.IO;
-using System.Configuration;
 using Fingerprints.CustomClasses;
-using System.Text;
 using System.Data;
 using System.Web.Helpers;
-using Newtonsoft.Json;
 using System.Web.Script.Serialization;
-using Twilio;
-using Twilio.Rest.Api.V2010.Account;
-using Twilio.Types;
 
 namespace Fingerprints.Controllers
 {
@@ -509,18 +499,31 @@ namespace Fingerprints.Controllers
                     {
                         string Notes = Message;
                         if (Session["Roleid"].ToString().Contains("82b862e6-1a0f-46d2-aad4-34f89f72369a"))
-                            new TeacherData().AddDailySafetyCheckOpenCloseRequest(Notes, Convert.ToBoolean(isClosed), false, true, new Guid(Session["UserID"].ToString()), monitor.ElementAt(0), null);
+                        {
+
+                       
+                            Guid userid = new Guid(Session["UserID"].ToString());
+                            new TeacherData().AddDailySafetyCheckOpenCloseRequest(Notes, Convert.ToBoolean(isClosed), false, true, userid, monitor.ElementAt(0), null);
+                        }
                         else
                         {
-                            new TeacherData().AddDailySafetyCheckOpenCloseRequest(Notes, Convert.ToBoolean(isClosed), true, false, new Guid(Session["UserID"].ToString()), monitor.ElementAt(0), monitor.ElementAt(0).CenterId.ToString());
+                            Guid userId = new Guid(Session["UserID"].ToString());
+                            new TeacherData().AddDailySafetyCheckOpenCloseRequest(Notes, Convert.ToBoolean(isClosed), true, false,userId, monitor.ElementAt(0), monitor.ElementAt(0).CenterId.ToString());
                         }
                     }
                     else
                     {
                         if (Session["Roleid"].ToString().Contains("82b862e6-1a0f-46d2-aad4-34f89f72369a"))
-                            new TeacherData().DeleteDailySafetyCheckOpenCloseRequest(new Guid(Session["UserID"].ToString()), false, monitor.ElementAt(0));
+                        {
+                            Guid userId = new Guid(Session["UserID"].ToString());
+                            new TeacherData().DeleteDailySafetyCheckOpenCloseRequest(userId, false, monitor.ElementAt(0));
+                        }
                         else
-                            new TeacherData().DeleteDailySafetyCheckOpenCloseRequest(new Guid(Session["UserID"].ToString()), true, monitor.ElementAt(0));
+                        {
+                            Guid userId = new Guid(Session["UserID"].ToString());
+                            new TeacherData().DeleteDailySafetyCheckOpenCloseRequest(userId, true, monitor.ElementAt(0));
+
+                        }
                     }
 
 
@@ -696,28 +699,28 @@ namespace Fingerprints.Controllers
             return Json(Result);
         }
 
-        public void SendSMSToParentTeacher(Tuple<bool, string, string, string, long, string, string> tupleSMS,String Reason)
-        {
-             string accountSid = Convert.ToString(ConfigurationManager.AppSettings["TwilioAccountId"]);
-             string authToken = Convert.ToString(ConfigurationManager.AppSettings["TwilioAuthToken"]);
+        //public void SendSMSToParentTeacher(Tuple<bool, string, string, string, long, string, string> tupleSMS,String Reason)
+        //{
+        //     string accountSid = Convert.ToString(ConfigurationManager.AppSettings["TwilioAccountId"]);
+        //     string authToken = Convert.ToString(ConfigurationManager.AppSettings["TwilioAuthToken"]);
 
-             TwilioClient.Init(accountSid, "235426b5a1eda1e999e6e4f17584e107");
+        //     TwilioClient.Init(accountSid, "235426b5a1eda1e999e6e4f17584e107");
 
-            var people = new Dictionary<string, string>() {
-                {"+918668170944", "Test"},
+        //    var people = new Dictionary<string, string>() {
+        //        {"+918668170944", "Test"},
                
-            };
+        //    };
 
-            foreach (var person in people)
-            {
-                MessageResource.Create(
-                    from: new PhoneNumber("+17402173945"), // From number, must be an SMS-enabled Twilio number
-                    to: new PhoneNumber(person.Key), // To number, if using Sandbox see note above
-                                                     // Message content
-                    body: $"Hey {person.Value} All classes for the center: " + tupleSMS.Item5 + " are closed today Because of "+Reason+". Do not report to office today.");
+        //    foreach (var person in people)
+        //    {
+        //        MessageResource.Create(
+        //            from: new PhoneNumber("+17402173945"), // From number, must be an SMS-enabled Twilio number
+        //            to: new PhoneNumber(person.Key), // To number, if using Sandbox see note above
+        //                                             // Message content
+        //            body: $"Hey {person.Value} All classes for the center: " + tupleSMS.Item5 + " are closed today Because of "+Reason+". Do not report to office today.");
 
-            }
-        }
+        //    }
+        //}
      
         public ActionResult DownloadDocuments(string FilePath)
         {
