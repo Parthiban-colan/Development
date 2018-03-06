@@ -1122,9 +1122,6 @@
     <Content Include="Images\3d-color3.png" />
     <Content Include="Images\3d-color4.png" />
     <Content Include="Images\3d-color5.png" />
-    <Content Include="Images\3d-green1.png" />
-    <Content Include="Images\3d-green2.png" />
-    <Content Include="Images\3d-green3.png" />
     <Content Include="Images\4.1.png" />
     <Content Include="Images\4.2.png" />
     <Content Include="Images\4.png" />
@@ -1132,12 +1129,10 @@
     <Content Include="Images\5.2.png" />
     <Content Include="Images\6.1.png" />
     <Content Include="Images\6.2.png" />
-    <Content Include="Images\6.png" />
     <Content Include="Images\7.1.png" />
     <Content Include="Images\7.2.png" />
     <Content Include="Images\8.1.png" />
     <Content Include="Images\8.2.png" />
-    <Content Include="Images\9.1.png" />
     <Content Include="Images\9.3.png" />
     <Content Include="Images\absent.png" />
     <Content Include="Images\accent.png" />
